@@ -51,8 +51,6 @@ int main(int ac, char **av, char **env)
 		}
 		free_mem(&buf, &num, &split, &path);
 	}
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
