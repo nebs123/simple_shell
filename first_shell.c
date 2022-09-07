@@ -70,20 +70,20 @@ void command(char *path, char **split, char **env)
 	if (child == -1)
 	{
 		perror("Error");
-		exit(-1);
+		_exit(-1);
 	} else if (child == 0)
 	{
 		if (execve(path, split, env) == -1)
 		{
 			perror("Error");
-			exit(-1);
+			_exit(-1);
 		}
 	} else
 	{
 		if (wait(&status) == -1)
 		{
 			perror("Error");
-			exit(-1);
+			_exit(-1);
 		}
 	}
 }
@@ -158,7 +158,7 @@ int builtin(char **args)
 {
 	if (_strcmp(args[0], "exit") == 0)
 	{
-		exit(0);
+		_exit(0);
 	} else if (_strcmp(args[0], "env") == 0)
 	{
 		printenv();
