@@ -40,7 +40,7 @@ int main(int ac, char **av, char **env)
 				free_mem(&buf, &num, &split, &path);
 				continue;
 			}
-			if (builtin(split))
+			if (builtin(split, buf, path))
 			{
 				path = get_path(split[0], &status);
 				if (path)
@@ -154,10 +154,13 @@ void perr(char *prog, int count, char *cmd, int stat)
  * @args: command line arguments
  * Return: status code which designates whether builitin was executed
  */
-int builtin(char **args)
+int builtin(char **args, char *buf, char *path)
 {
 	if (_strcmp(args[0], "exit") == 0)
 	{
+		free(args);
+		free(buf);
+		free(path);
 		_exit(0);
 	} else if (_strcmp(args[0], "env") == 0)
 	{
