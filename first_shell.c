@@ -17,7 +17,7 @@ int main(int ac, char **av, char **env)
 	char *buf = NULL, **split = NULL, *path = NULL;
 	size_t num = 0;
 	ssize_t num2 = 0;
-	int done = 1, status, count, exit_st;
+	int done = 1, status, count, exit_st = 0;
 
 	(void) ac;
 	for (count = 1; done; count++)
@@ -85,7 +85,7 @@ int command(char *path, char **split, char **env)
 			perror("Error");
 			_exit(-1);
 		}
-		if(WIFEXITED(status))
+		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
 	return (0);
@@ -155,6 +155,9 @@ void perr(char *prog, int count, char *cmd, int stat)
 /**
  * builtin - executes the builting shell command
  * @args: command line arguments
+ * @buf: buffer that holds string of line
+ * @path: path returned by get_path
+ * @exit_st: exit status of the previous command
  * Return: status code which designates whether builitin was executed
  */
 int builtin(char **args, char *buf, char *path, int exit_st)
