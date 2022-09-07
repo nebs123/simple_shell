@@ -51,7 +51,7 @@ int main(int ac, char **av, char **env)
 		}
 		free_mem(&buf, &num, &split, &path);
 	}
-	return (0);
+	return (exit_st);
 }
 
 /**
