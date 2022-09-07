@@ -163,5 +163,6 @@ void printenv(void)
 	{
 		write(STDOUT_FILENO, environ[n], _strlen(environ[n]));
 		write(STDOUT_FILENO, "\n", _strlen("\n"));
+		fflush(stdout);
 	}
 }

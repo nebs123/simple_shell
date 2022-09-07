@@ -146,6 +146,7 @@ void perr(char *prog, int count, char *cmd, int stat)
 		write(STDOUT_FILENO, ": ", _strlen(": "));
 		write(STDOUT_FILENO, "not found\n", _strlen("not found\n"));
 	}
+	fflush(stdout);
 }
 
 /**
