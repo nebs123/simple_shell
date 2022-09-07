@@ -19,10 +19,10 @@ char **str_delim(char *str, char delim);
 char *_getenv(const char *name);
 int _strlen(const char *s);
 char *get_path(char *file, int *status);
-void command(char *path, char **split, char **env);
+int command(char *path, char **split, char **env);
 void free_mem(char **buf, size_t *num, char ***split, char **path);
 void perr(char *prog, int count, char *cmd, int stat);
-int builtin(char **args, char *buf, char *path);
+int builtin(char **args, char *buf, char *path, int exit_st);
 void printenv(void);
 char **copier(char **arr, unsigned int *arr_size, unsigned int increment,
 	      unsigned int next);

@@ -17,7 +17,7 @@ int main(int ac, char **av, char **env)
 	char *buf = NULL, **split = NULL, *path = NULL;
 	size_t num = 0;
 	ssize_t num2 = 0;
-	int done = 1, status, count;
+	int done = 1, status, count, exit_st;
 
 	(void) ac;
 	for (count = 1; done; count++)
@@ -40,11 +40,11 @@ int main(int ac, char **av, char **env)
 				free_mem(&buf, &num, &split, &path);
 				continue;
 			}
-			if (builtin(split, buf, path))
+			if (builtin(split, buf, path, exit_st))
 			{
 				path = get_path(split[0], &status);
 				if (path)
-					command(path, split, env);
+					exit_st = command(path, split, env);
 				else
 					perr(av[0], count, split[0], status);
 			}
@@ -61,7 +61,7 @@ int main(int ac, char **av, char **env)
  * @env: environment of the process executing the program
  * Return: void( no return)
  */
-void command(char *path, char **split, char **env)
+int command(char *path, char **split, char **env)
 {
 	pid_t child;
 	int status;
@@ -85,7 +85,10 @@ void command(char *path, char **split, char **env)
 			perror("Error");
 			_exit(-1);
 		}
+		if(WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
+	return (0);
 }
 
 /**
@@ -154,14 +157,14 @@ void perr(char *prog, int count, char *cmd, int stat)
  * @args: command line arguments
  * Return: status code which designates whether builitin was executed
  */
-int builtin(char **args, char *buf, char *path)
+int builtin(char **args, char *buf, char *path, int exit_st)
 {
 	if (_strcmp(args[0], "exit") == 0)
 	{
 		free(args);
 		free(buf);
 		free(path);
-		_exit(0);
+		_exit(exit_st);
 	} else if (_strcmp(args[0], "env") == 0)
 	{
 		printenv();
