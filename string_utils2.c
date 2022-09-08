@@ -11,7 +11,7 @@ void write_int(int n)
 
 	if (n < 0)
 	{
-		_putchar('-');
+		_putchar('-', STDERR_FILENO);
 		x = -n;
 	} else
 	{
@@ -24,5 +24,5 @@ void write_int(int n)
 
 	}
 
-	_putchar((x % 10) + '0');
+	_putchar((x % 10) + '0', STDERR_FILENO);
 }

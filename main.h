@@ -28,5 +28,5 @@ char **copier(char **arr, unsigned int *arr_size, unsigned int increment,
 	      unsigned int next);
 char *check_file(char *file, struct stat *info, int *status);
 void write_int(int num);
-int _putchar(char c);
+int _putchar(char c, int err);
 #endif

@@ -133,27 +133,27 @@ int perr(char *prog, int count, char *cmd, int stat)
 
 	if (stat == -1)
 	{
-		write(STDOUT_FILENO, prog, _strlen(prog));
-		write(STDOUT_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, prog, _strlen(prog));
+		write(STDERR_FILENO, ": ", _strlen(": "));
 		write_int(count);
-		write(STDOUT_FILENO, ": ", _strlen(": "));
-		write(STDOUT_FILENO, cmd, _strlen(cmd));
-		write(STDOUT_FILENO, ": ", _strlen(": "));
-		write(STDOUT_FILENO, "Permission denied\n",
+		write(STDERR_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, cmd, _strlen(cmd));
+		write(STDERR_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, "Permission denied\n",
 		      _strlen("Permission denied\n"));
 		ret = 126;
 	} else
 	{
-		write(STDOUT_FILENO, prog, _strlen(prog));
-		write(STDOUT_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, prog, _strlen(prog));
+		write(STDERR_FILENO, ": ", _strlen(": "));
 		write_int(count);
-		write(STDOUT_FILENO, ": ", _strlen(": "));
-		write(STDOUT_FILENO, cmd, _strlen(cmd));
-		write(STDOUT_FILENO, ": ", _strlen(": "));
-		write(STDOUT_FILENO, "not found\n", _strlen("not found\n"));
+		write(STDERR_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, cmd, _strlen(cmd));
+		write(STDERR_FILENO, ": ", _strlen(": "));
+		write(STDERR_FILENO, "not found\n", _strlen("not found\n"));
 		ret = 127;
 	}
-	fflush(stdout);
+	fflush(stderr);
 	return (ret);
 
 }
