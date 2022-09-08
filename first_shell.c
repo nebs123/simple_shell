@@ -46,7 +46,7 @@ int main(int ac, char **av, char **env)
 				if (path)
 					exit_st = command(path, split, env);
 				else
-					perr(av[0], count, split[0], status);
+					exit_st = perr(av[0], count, split[0], status);
 			}
 		}
 		free_mem(&buf, &num, &split, &path);
@@ -127,8 +127,10 @@ void free_mem(char **buf, size_t *num, char ***split, char **path)
  * @stat: status of the error
  * Return: void (no return)
  */
-void perr(char *prog, int count, char *cmd, int stat)
+int perr(char *prog, int count, char *cmd, int stat)
 {
+	int ret;
+
 	if (stat == -1)
 	{
 		write(STDOUT_FILENO, prog, _strlen(prog));
@@ -139,6 +141,7 @@ void perr(char *prog, int count, char *cmd, int stat)
 		write(STDOUT_FILENO, ": ", _strlen(": "));
 		write(STDOUT_FILENO, "Permission denied\n",
 		      _strlen("Permission denied\n"));
+		ret = 126;
 	} else
 	{
 		write(STDOUT_FILENO, prog, _strlen(prog));
@@ -148,8 +151,11 @@ void perr(char *prog, int count, char *cmd, int stat)
 		write(STDOUT_FILENO, cmd, _strlen(cmd));
 		write(STDOUT_FILENO, ": ", _strlen(": "));
 		write(STDOUT_FILENO, "not found\n", _strlen("not found\n"));
+		ret = 127;
 	}
 	fflush(stdout);
+	return (ret);
+
 }
 
 /**
